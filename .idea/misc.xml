@@ -4,6 +4,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/End_GateWay" />
     <file type="web" url="file://$PROJECT_DIR$/Front-Gateway" />
+    <file type="web" url="file://$PROJECT_DIR$/Middle-Auth" />
     <file type="web" url="file://$PROJECT_DIR$/Middle_Order" />
     <file type="web" url="file://$PROJECT_DIR$/Middle_Product" />
     <file type="web" url="file://$PROJECT_DIR$/Up-Server" />
