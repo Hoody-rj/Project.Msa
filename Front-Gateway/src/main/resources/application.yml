@@ -1,0 +1,30 @@
+
+
+spring:
+  application:
+    name:
+      Front-Gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: middle-order
+          uri: lb://middle-order
+          predicates:
+            - Path=/orders/**
+        - id: middle-product
+          uri: lb://middle-product
+          predicates:
+            - Path=/products/**
+      discovery:
+        locator:
+          enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone:
+        http://localhost:19090/eureka/
+
+server:
+  port: 19091
