@@ -4,11 +4,13 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -18,6 +20,12 @@ public class AuthController {
     @GetMapping("/auth/signIn")
     public ResponseEntity<?> createAuthentication(@RequestParam String user_id) throws Exception {
         return ResponseEntity.ok(new AuthResponse(authService.createAccessToken(user_id)));
+    }
+
+    @GetMapping("/auth/test")
+    public String test() throws Exception {
+        log.info("#####test#####");
+        return "Test";
     }
 
     @Data

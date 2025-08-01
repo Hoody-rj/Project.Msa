@@ -17,6 +17,10 @@ spring:
           uri: lb://middle-product
           predicates:
             - Path=/products/**
+        - id: middle-auth
+          uri: lb://middle-auth
+          predicates:
+            - Path=/auth/**
       discovery:
         locator:
           enabled: true

@@ -9,11 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.SecretKey;
 
+@Component
 @Slf4j
 public class LocalJwtAuthenticationFilter implements GlobalFilter {
     @Value("${service.jwt.secret-key}")
@@ -21,8 +24,21 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
+        String passpath = exchange.getRequest().getURI().getPath();
+        //SignIn 즉 회원가입일 경우 패스
+        if (passpath.endsWith("/signIn")) {
+            return chain.filter(exchange);
+        }
+
+        //gateway에서 만료 일자만 확인하고 패스
         String token = extractToken(exchange);
-        return null;
+
+        if (token == null || !validateToken(token)) { // validatetoken 함수의 결과 값으로 확인
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
+
+        return chain.filter(exchange);
     }
 
     private String extractToken(ServerWebExchange exchange){
