@@ -1,11 +1,9 @@
 package com.msa.middleauth;
 
-import com.msa.middleauth.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +11,9 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
-@RequiredArgsConstructor
 public class AuthService {
 
-
+    private final SecretKey secretKey;
 
     @Value("${spring.application.name}")
     private String issuer;
@@ -24,12 +21,9 @@ public class AuthService {
     @Value("${service.jwt.access-expiration}")
     private Long accessExpiration;
 
-    public AuthService(AuthRepository authRepository, @Value("${service.jwt.secret-key}") String secretKey) {
-        this.authRepository = authRepository;
+    public AuthService(@Value("${service.jwt.secret-key}") String secretKey) {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
     }
-    private final AuthRepository authRepository;
-    private final SecretKey secretKey;
 
     public String createAccessToken(String user_id){
         return Jwts.builder()
@@ -42,7 +36,4 @@ public class AuthService {
                 .compact();
     }
 
-    public void createNewuser(User user){
-        authRepository.save(user);
-    }
 }

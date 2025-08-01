@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final AuthRepository authRepository;
+
 
     @PostMapping("/signIn")
     public ResponseEntity<ResultData<AuthResponse>> createAuthentication(@RequestBody Requestuser user) throws Exception {
@@ -28,7 +30,8 @@ public class AuthController {
                 user.getUser_phone()
         );
 
-        authService.createNewuser(tempuser);
+        authRepository.save(tempuser);
+        
         return ResponseEntity.ok(ResultData.<AuthResponse>builder()
                 .resultcheck(true)
                 .resultdata(new AuthResponse(authService.createAccessToken(user.getUser_id())))

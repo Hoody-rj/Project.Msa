@@ -14,9 +14,15 @@ spring:
           predicates:
             - Path=/orders/**
         - id: middle-product
-          uri: lb://middle-product
+          uri: http://localhost:19093
           predicates:
             - Path=/products/**
+            - Weight=group-product, 3
+        - id: middle-product
+          uri: http://localhost:19094
+          predicates:
+            - Path=/products/**
+            - Weight=group-product, 7
         - id: middle-auth
           uri: lb://middle-auth
           predicates:

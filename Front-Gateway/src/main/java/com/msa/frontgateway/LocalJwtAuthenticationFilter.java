@@ -25,11 +25,13 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
         String passpath = exchange.getRequest().getURI().getPath();
+
+
+
         //SignIn 즉 회원가입일 경우 패스
         if (passpath.endsWith("/auth/signIn")) {
             return chain.filter(exchange);
         }
-
         //gateway에서 만료 일자만 확인하고 패스
         String token = extractToken(exchange);
 

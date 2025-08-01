@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @Setter
 @Entity
 @Table(name = "tbl_user")
+@NoArgsConstructor
 public class User {
     @Id
     private String user_id;
@@ -26,6 +27,4 @@ public class User {
         this.user_name = user_name;
         this.user_phone = user_phone;
     }
-
-    public User() {}
 }
