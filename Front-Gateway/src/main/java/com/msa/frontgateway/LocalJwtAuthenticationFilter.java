@@ -15,6 +15,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Component
 @Slf4j
@@ -57,6 +58,12 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
             Jws<Claims> claims = Jwts.parser()
                     .verifyWith(key)
                     .build().parseSignedClaims(token);
+
+            if (claims.getBody().getExpiration() == null || claims.getBody().getExpiration().before(new Date())) {
+                log.warn("토큰 만료됨");
+                return false;
+            }
+
             log.info("#####payload : " + claims.getPayload().toString());
             log.info("#####date : " + claims.getBody().getIssuedAt() + " ~ " + claims.getBody().getExpiration());
             return true;

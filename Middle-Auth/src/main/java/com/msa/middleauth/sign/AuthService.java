@@ -1,4 +1,4 @@
-package com.msa.middleauth;
+package com.msa.middleauth.sign;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

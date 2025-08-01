@@ -1,15 +1,19 @@
-package com.msa.middleauth;
+package com.msa.middleauth.sign;
 
-import com.msa.middleauth.cmmn.ResultData;
-import com.msa.middleauth.dto.Request.Requestuser;
-import com.msa.middleauth.entity.User;
-import jakarta.servlet.http.HttpSession;
+import com.msa.middleauth.sign.cmmn.ResultData;
+import com.msa.middleauth.sign.dto.Request.Requestuser;
+import com.msa.middleauth.sign.entity.User;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,21 +26,23 @@ public class AuthController {
 
 
     @PostMapping("/signIn")
-    public ResponseEntity<ResultData<AuthResponse>> createAuthentication(@RequestBody Requestuser user) throws Exception {
+    public ResponseEntity<AuthResponse> createAuthentication(
+            @RequestBody @Valid Requestuser user
+            ) throws Exception {
         User tempuser = new User(
                 user.getUser_id(),
                 user.getUser_pwd(),
                 user.getUser_name(),
                 user.getUser_phone()
         );
-
         authRepository.save(tempuser);
-        
-        return ResponseEntity.ok(ResultData.<AuthResponse>builder()
-                .resultcheck(true)
-                .resultdata(new AuthResponse(authService.createAccessToken(user.getUser_id())))
-                .resultmessage("")
-                .build());
+
+        // 토큰 생성
+        String token = authService.createAccessToken(user.getUser_id());
+
+        // AuthResponse로 감싸서 반환
+        AuthResponse response = new AuthResponse(token);
+        return ResponseEntity.ok(response);
     }
 
 //    @PostMapping("/signUp")

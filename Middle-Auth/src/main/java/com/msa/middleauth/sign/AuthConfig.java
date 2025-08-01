@@ -1,4 +1,4 @@
-package com.msa.middleauth;
+package com.msa.middleauth.sign;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

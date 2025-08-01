@@ -1,6 +1,6 @@
-package com.msa.middleauth;
+package com.msa.middleauth.sign;
 
-import com.msa.middleauth.entity.User;
+import com.msa.middleauth.sign.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

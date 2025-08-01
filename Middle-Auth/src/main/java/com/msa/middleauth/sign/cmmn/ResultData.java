@@ -1,4 +1,4 @@
-package com.msa.middleauth.cmmn;
+package com.msa.middleauth.sign.cmmn;
 
 
 import lombok.Builder;

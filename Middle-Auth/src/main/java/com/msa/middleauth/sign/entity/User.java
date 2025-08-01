@@ -1,4 +1,4 @@
-package com.msa.middleauth.entity;
+package com.msa.middleauth.sign.entity;
 
 
 import jakarta.persistence.Entity;
