@@ -1,5 +1,8 @@
 package com.msa.middleauth;
 
+import com.msa.middleauth.cmmn.ResultData;
+import com.msa.middleauth.dto.Request.Requestuser;
+import com.msa.middleauth.entity.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,18 +14,33 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/signIn")
-    public ResponseEntity<?> createAuthentication(@RequestBody String user_id) throws Exception {
-        return ResponseEntity.ok(new AuthResponse(authService.createAccessToken(user_id)));
+    @PostMapping("/signIn")
+    public ResponseEntity<ResultData<AuthResponse>> createAuthentication(@RequestBody Requestuser user) throws Exception {
+        User tempuser = new User(
+                user.getUser_id(),
+                user.getUser_pwd(),
+                user.getUser_name(),
+                user.getUser_phone()
+        );
+
+        authService.createNewuser(tempuser);
+        return ResponseEntity.ok(ResultData.<AuthResponse>builder()
+                .resultcheck(true)
+                .resultdata(new AuthResponse(authService.createAccessToken(user.getUser_id())))
+                .resultmessage("")
+                .build());
     }
 
+//    @PostMapping("/signUp")
+//    public ResponseEntity<ResultData<String>>
 
 
-    @GetMapping("/auth/test")
+    @GetMapping("/test")
     public String test() throws Exception {
         log.info("#####test#####");
         return "Test";
@@ -30,7 +48,7 @@ public class AuthController {
 
     @Data
     @AllArgsConstructor
-    static class AuthResponse {
+    public static class AuthResponse {
         private String accessToken;
 
     }

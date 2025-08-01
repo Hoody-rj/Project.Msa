@@ -26,7 +26,7 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
         String passpath = exchange.getRequest().getURI().getPath();
         //SignIn 즉 회원가입일 경우 패스
-        if (passpath.endsWith("/signIn")) {
+        if (passpath.endsWith("/auth/signIn")) {
             return chain.filter(exchange);
         }
 
@@ -56,6 +56,7 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
                     .verifyWith(key)
                     .build().parseSignedClaims(token);
             log.info("#####payload : " + claims.getPayload().toString());
+            log.info("#####date : " + claims.getBody().getIssuedAt() + " ~ " + claims.getBody().getExpiration());
             return true;
         }catch (Exception e){
             return false;

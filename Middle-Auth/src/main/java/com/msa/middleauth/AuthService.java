@@ -1,9 +1,11 @@
 package com.msa.middleauth;
 
+import com.msa.middleauth.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,10 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
+
+
 
     @Value("${spring.application.name}")
     private String issuer;
@@ -19,10 +24,11 @@ public class AuthService {
     @Value("${service.jwt.access-expiration}")
     private Long accessExpiration;
 
-    public AuthService(@Value("${service.jwt.secret-key}") String secretKey) {
+    public AuthService(AuthRepository authRepository, @Value("${service.jwt.secret-key}") String secretKey) {
+        this.authRepository = authRepository;
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
     }
-
+    private final AuthRepository authRepository;
     private final SecretKey secretKey;
 
     public String createAccessToken(String user_id){
@@ -34,5 +40,9 @@ public class AuthService {
                 .expiration(new Date(System.currentTimeMillis() + accessExpiration)) // 발급시간에서 설정 값 중 지연 시간 더한 값
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
+    }
+
+    public void createNewuser(User user){
+        authRepository.save(user);
     }
 }
