@@ -2,6 +2,23 @@ spring:
   application:
     name: middle-auth
 
+  datasource:
+    url: jdbc:mysql://localhost:3306/scc_db
+    username: root
+    password: god81725
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
 eureka:
   client:
     service-url:
@@ -14,3 +31,4 @@ service:
 
 server:
   port: 19095
+

@@ -15,7 +15,7 @@ public class AuthConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize-> authorize
-                        .requestMatchers("/auth/signIn")
+                        .requestMatchers("/auth/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
