@@ -1,7 +1,5 @@
 package com.msa.middle_order.order.dto.Response;
 
-import jakarta.persistence.Column;
-
 public class ResponseProduct {
     private Long product_id;
     private String product_name;

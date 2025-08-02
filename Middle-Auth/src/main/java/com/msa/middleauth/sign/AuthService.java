@@ -35,5 +35,4 @@ public class AuthService {
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
-
 }

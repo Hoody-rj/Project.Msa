@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.Length;
 
 @Getter
 @Setter
@@ -26,6 +25,5 @@ public class Products {
     private float product_supply_price;
     @Column(nullable = false, length = 3 )
     private String currency;
-
 
 }
