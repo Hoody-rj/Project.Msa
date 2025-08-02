@@ -1,7 +1,9 @@
 spring:
   application:
     name: middle-auth
-
+#  redis:
+#    port: 6379
+#    host: localhost
   datasource:
     url: jdbc:mysql://localhost:3306/scc_db
     username: root
@@ -18,6 +20,8 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.MySQLDialect
+
+
 
 eureka:
   client:
