@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public class ResultData <T>{
-    public T resultData;
-    public boolean resultCheck;
-    public String resultMessage;
+    public T resultdata;
+    public boolean resultcheck;
+    public String resultmessage;
 }

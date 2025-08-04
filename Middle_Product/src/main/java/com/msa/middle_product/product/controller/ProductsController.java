@@ -3,6 +3,7 @@ package com.msa.middle_product.product.controller;
 
 import com.msa.middle_product.product.ProductsService;
 import com.msa.middle_product.product.cmmn.ResultData;
+import com.msa.middle_product.product.dto.request.RequestRegist;
 import com.msa.middle_product.product.entity.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,13 +46,8 @@ public class ProductsController {
 
 
     @PostMapping("/registration")
-    public ResponseEntity<String> saveProducts(@RequestBody Products products) {
+    public ResponseEntity<String> saveProducts(@RequestBody RequestRegist products) {
         productsService.productssave(products);
-        return ResponseEntity.ok("port is " + port);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
         return ResponseEntity.ok("port is " + port);
     }
 

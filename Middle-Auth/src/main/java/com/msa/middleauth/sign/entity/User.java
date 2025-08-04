@@ -26,5 +26,6 @@ public class User {
         this.user_pwd = user_pwd;
         this.user_name = user_name;
         this.user_phone = user_phone;
+        this.user_auth = "user";
     }
 }

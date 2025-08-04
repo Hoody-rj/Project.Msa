@@ -2,6 +2,8 @@ package com.msa.middleauth.sign;
 
 import com.msa.middleauth.sign.cmmn.ResultData;
 import com.msa.middleauth.sign.dto.Request.Requestuser;
+import com.msa.middleauth.sign.dto.Request.RequestuserAuth;
+import com.msa.middleauth.sign.dto.Response.ResponseuserAuth;
 import com.msa.middleauth.sign.entity.User;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -30,20 +32,18 @@ public class AuthController {
     @PostMapping("/signIn")
     public ResponseEntity<AuthResponse> createAuthentication(
             @RequestBody @Valid Requestuser user
-            ) throws Exception {
+    ) throws Exception {
         AuthResponse response;
-        if(authenService.createUser(user))
-        {
+        if (authenService.createUser(user)) {
             // 토큰 생성
             String token = authService.createAccessToken(user.getUser_id());
 
             // AuthResponse로 감싸서 반환
-             response = new AuthResponse(
+            response = new AuthResponse(
                     token,
                     "");
 
-        }
-        else{
+        } else {
             response = new AuthResponse(
                     null,
                     "존재하는 ID 입니다."
@@ -51,13 +51,24 @@ public class AuthController {
         }
         return ResponseEntity.ok(response);
     }
+
     @PostMapping("/signUp/{user_id}")
     public ResponseEntity<ResultData<String>> getAuthorization(
-        @PathVariable String user_id
-    )
-    {
-
+            @PathVariable String user_id
+    ) {
+        return ResponseEntity.ok(null);
     }
+
+    @PostMapping("/confirm")
+    public ResponseEntity<ResultData<ResponseuserAuth>> confirm(@RequestBody RequestuserAuth requestuserAuth) {
+
+        return ResponseEntity.ok(ResultData.<ResponseuserAuth>builder()
+                .resultcheck(true)
+                .resultdata(authenService.confirmAuth(requestuserAuth.accesstoken))
+                .resultmessage("값을 반환했습니다.")
+                .build());
+    }
+
 
     @Data
     @AllArgsConstructor

@@ -12,7 +12,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "tbl_product")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Products {
 
     @Id
@@ -26,4 +25,10 @@ public class Products {
     @Column(nullable = false, length = 3 )
     private String currency;
 
+    public Products(String product_name, float product_price, float product_supply_price, String currency) {
+        this.product_name = product_name;
+        this.product_price = product_price;
+        this.product_supply_price = product_supply_price;
+        this.currency = currency;
+    }
 }

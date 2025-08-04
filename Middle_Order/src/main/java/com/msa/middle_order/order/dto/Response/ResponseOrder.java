@@ -1,5 +1,6 @@
 package com.msa.middle_order.order.dto.Response;
 
+import com.msa.middle_order.order.entity.Ordered;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

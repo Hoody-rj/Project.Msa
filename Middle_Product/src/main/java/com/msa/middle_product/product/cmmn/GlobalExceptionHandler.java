@@ -1,5 +1,6 @@
 package com.msa.middle_product.product.cmmn;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,5 +22,14 @@ public class GlobalExceptionHandler {
         body.put("message", ex.getMessage());
         body.put("timestamp", Instant.now().toString());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ResultData<Object>> handleProductNotFound(DataIntegrityViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ResultData.builder()
+                        .resultmessage("Error : "+ex.getMessage())
+                        .resultdata(null)
+                        .resultcheck(false)
+                        .build());
     }
 }
