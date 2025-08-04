@@ -25,10 +25,14 @@
 ### Middle-Product
   - port 1: 19093
   - port 2: 19094
+  - id를 제외한 모든 값을 입력해야함
 ### Middle-Order
   - port : 19092
+  - id를 제외한 모든 값을 입력해야함
 ### Middle-Auth
   - port : 19095
+  - Auth 키 값 발급 시 기존 값은 user
+  - 
 <hr>
 ## 프로그램 로직
 /auth/signU
